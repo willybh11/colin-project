@@ -6,6 +6,8 @@ import java.util.HashMap;
 public class colinMovie {
     public Movie movie;
     private int opacity;
+    private int x;
+    private int y;
     private float timeScale;
     
     public colinMovie(PApplet papp, String filename, int velocity) {
@@ -13,6 +15,9 @@ public class colinMovie {
         this.opacity = 0;
         this.timeScale = Math.min(((float) velocity)/127 * 2 + .4, 4);
         println(this.timeScale);
+
+        x = random(1920);
+        y = random(1080);
         
         this.movie.noLoop();
         this.movie.play();
@@ -37,7 +42,8 @@ public class colinMovie {
     public void drawMovie() {
         this.opacity = calcOpacity();
         tint(255, this.opacity);
-        image(this.movie, 0,0); 
+        imageMode(CENTER);
+        image(this.movie, this.x, this.y); 
     }
 
     public boolean pauseIfOver() {
