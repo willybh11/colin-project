@@ -12,6 +12,7 @@ Client client;
 String dataBuffer;
 
 final String JSON_STREAM_DELIMITER_AVYAY = "<!>";
+final int MILES_LIMIT = 7;
 
 int millisTimeOfKill = -1000;
 
@@ -58,6 +59,7 @@ void getKeysPressed() {
         String[] incoming = dataBuffer.split(JSON_STREAM_DELIMITER_AVYAY);
         
         if (dataBuffer.endsWith("<!>")) {
+            println("incoming.length: " + incoming.length);
             for (int i = 0; i < incoming.length; i++) {
                 JSONObject e = parseJSONObject(incoming[i]);
                 processKeyEvent(e);
@@ -75,19 +77,18 @@ void getKeysPressed() {
 
 
 void processKeyEvent(JSONObject object) {
-    JSONArray arr = object.getJSONArray("notes_pressed");
-
-    for (int i = 0; i < arr.size(); i++) {
-        JSONArray note = arr.getJSONArray(i);
-        String pitch = note.getString(0); //note 
-        int velocity = note.getInt(1); //velocity
-
-        println("Playing " + pitch + " with velocity " + velocity + "fr: " + frameRate);
-        playMovie(pitch, velocity);
-        
-    }
-
+    if (colinMovies.size() < MILES_LIMIT) {
+        JSONArray arr = object.getJSONArray("notes_pressed");
     
+        for (int i = 0; i < arr.size(); i++) {
+                JSONArray note = arr.getJSONArray(i);
+                String pitch = note.getString(0); //note 
+                int velocity = note.getInt(1); //velocity
+      
+                println("Playing " + pitch + " with velocity " + velocity + "fr: " + frameRate);
+                playMovie(pitch, velocity);
+        }
+    }
 }
 
 
