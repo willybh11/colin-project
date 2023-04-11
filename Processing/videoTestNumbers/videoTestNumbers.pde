@@ -91,15 +91,18 @@ void processKeyEvent(JSONObject object) {
     }
 }
 
-
 void movieEvent(Movie m) {
     m.read();
-}  
+}
 
+String random_funny(ArrayList<String> names) {
+    return names.get(random(names.size() - 1));
+}
 
 void playMovie(String note, int velocity) {
     String name = note + str(millis());
     // if (!doesFileExist(note.replaceAll("\\^(d+)", "4") + ".mov")) return;
+    // colinMovies.put(name, new colinMovie(this, random_funny(), velocity));
     colinMovies.put(name, new colinMovie(this, note + ".mov", velocity));
 }
 
