@@ -96,7 +96,7 @@ void movieEvent(Movie m) {
 }
 
 String random_funny(ArrayList<String> names) {
-    return names.get(random(names.size() - 1));
+    return names.get((int) random(names.size() - 1));
 }
 
 void playMovie(String note, int velocity) {
