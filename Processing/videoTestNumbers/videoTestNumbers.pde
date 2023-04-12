@@ -14,8 +14,6 @@ String dataBuffer;
 final String JSON_STREAM_DELIMITER_AVYAY = "<!>";
 final int MILES_LIMIT = 7;
 
-int millisTimeOfKill = -1000;
-
 void setup() {
     size(1920, 1080);
     
@@ -23,7 +21,7 @@ void setup() {
     client = new Client(this, "127.0.0.1", 3000);
     dataBuffer = "";
 
-    Movie dummyMovie = new Movie(this, "C2.mov");
+    Movie dummyMovie = new Movie(this, "C6.mov");
     dummyMovie.dispose();
 }  
 
@@ -99,21 +97,30 @@ void movieEvent(Movie m) {
 
 void playMovie(String note, int velocity) {
     String name = note + str(millis());
-    // if (!doesFileExist(note.replaceAll("\\^(d+)", "4") + ".mov")) return;
-    colinMovies.put(name, new colinMovie(this, note + ".mov", velocity));
+    
+    if (note.charAt(note.length() - 1) == '2') {
+          if (!doesFileExist(note + ".png")) {
+              println(note + ".png not found!");
+              return;
+          }
+          colinMovies.put(name, new colinImage(this, note, velocity));
+      } else {
+          if (!doesFileExist(note + ".mov")) {
+              println(note + ".mov not found!");
+              return;
+          }
+          colinMovies.put(name, new colinMovie(this, note, velocity));
+      }
 }
 
-
-// boolean doesFileExist(String filePath) {
-//   return new File(dataPath(filePath)).exists();
-// }
+ boolean doesFileExist(String filePath) {
+   return new File(dataPath(filePath)).exists();
+ }
 
 
 void keyPressed() {
     if (key == 'q') {
-        println("clearing movies");
         colinMovies.clear();
-
         String[] incoming = dataBuffer.split(JSON_STREAM_DELIMITER_AVYAY);
         if (incoming.length != 0)
             dataBuffer = incoming[incoming.length - 1];
