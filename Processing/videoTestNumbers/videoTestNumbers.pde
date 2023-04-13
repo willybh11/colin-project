@@ -89,11 +89,13 @@ void processKeyEvent(JSONObject object) {
     }
 }
 
-
 void movieEvent(Movie m) {
     m.read();
-}  
+}
 
+String random_funny(ArrayList<String> names) {
+    return names.get((int) random(names.size() - 1));
+}
 
 void playMovie(String note, int velocity) {
     String name = note + str(millis());
