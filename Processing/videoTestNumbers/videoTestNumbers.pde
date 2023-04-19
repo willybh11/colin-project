@@ -11,11 +11,26 @@ ConcurrentHashMap<String, colinMovie> colinMovies;
 Client client;
 String dataBuffer;
 
+String[] PITCH_CLASSES = {
+    /* 
+    "C", "Db", "D", "Eb",
+    "E", "F", "Gb", "G",
+    "Ab", "A", "Bb", "B" 
+    */
+
+    "C", "C#", "D", "D#",
+    "E", "F", "F#", "G", 
+    "G#", "A", "A#", "B"
+};
+
+ArrayList<Integer> indices = new ArrayList<>();
+
 final String JSON_STREAM_DELIMITER_AVYAY = "<!>";
 final int MILES_LIMIT = 7;
 
 void setup() {
     size(1920, 1080);
+    frameRate(30);
     
     colinMovies = new ConcurrentHashMap<String, colinMovie>();
     client = new Client(this, "127.0.0.1", 3000);
@@ -93,12 +108,39 @@ void movieEvent(Movie m) {
     m.read();
 }
 
-String random_funny(ArrayList<String> names) {
-    return names.get((int) random(names.size() - 1));
+String random_funny(String note) {
+    if (indices.size() <= 0) {
+        for (int i=0; i<PITCH_CLASSES.length; i++) {
+            if (indices.size() < PITCH_CLASSES.length)
+                indices.add(i);
+            else
+                throw new RuntimeException();
+        };
+    }
+
+    int octave = parseInt(note.substring(note.length() - 1));
+    // println("old octave " + octave);
+    octave = octave >= 2 ? 5 : 2;
+    // println("new octave " + octave);
+    // println(octave);
+
+    String out = PITCH_CLASSES[indices.remove((int) random(indices.size()))] + octave;
+
+    // println("out " + out);
+    return out;
 }
 
-void playMovie(String note, int velocity) {
-    String name = note + str(millis());
+void playMovie(String source_note, int velocity) {
+    String name = source_note + str(millis());
+    String note = source_note;
+    
+    //try {
+    //    note = random_funny(source_note);
+    //} catch (RuntimeException e) {
+    //    note = source_note;
+    //}
+
+    println(note);
     
     if (note.charAt(note.length() - 1) == '2') {
           if (!doesFileExist(note + ".png")) {

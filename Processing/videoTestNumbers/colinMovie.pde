@@ -19,8 +19,8 @@ public class colinMovie {
         timeScale = Math.min(((float) velocity)/127 * 2 + .4, 4);
         println(this.timeScale);
 
-        x = (int) random(1920);
-        y = (int) random(1080);
+        x = ((int) random(1900)) + 10;
+        y = ((int) random(1060)) + 10;
         movie.noLoop();
         movie.play();
     }
