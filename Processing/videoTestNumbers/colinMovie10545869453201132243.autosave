@@ -44,10 +44,8 @@ public class colinMovie {
         tint(255, calcOpacity());
         
         try {
-            image(movie, 0, 0);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            println("Daaayyuu- aw...");
-        }
+            image(movie, this.x, this.y, 360, 640); 
+        } catch ()
     }
 
     public boolean pauseIfOver() {
@@ -60,50 +58,50 @@ public class colinMovie {
     }
 }
 
-// public class colinImage extends colinMovie {
-//     protected float timeScale;
-//     private PImage image;
-//     private int startMillis;
+public class colinImage extends colinMovie {
+    protected float timeScale;
+    private PImage image;
+    private int startMillis;
 
-//     public colinImage(PApplet papp, String note, int velocity) {
-//         super(papp, note, velocity);
-//     }
+    public colinImage(PApplet papp, String note, int velocity) {
+        super(papp, note, velocity);
+    }
 
-//     @Override
-//     protected void start(PApplet papp, String note, int velocity) {
-//         image = loadImage(note + ".png");
-//         timeScale = Math.min(((float) velocity)/127 * 2 + .4, 4);
-//         startMillis = millis();
-//     }
+    @Override
+    protected void start(PApplet papp, String note, int velocity) {
+        image = loadImage(note + ".png");
+        timeScale = Math.min(((float) velocity)/127 * 2 + .4, 4);
+        startMillis = millis();
+    }
 
-//     @Override
-//     public void drawMovie() {
-//         tint(255, calcOpacity());
+    @Override
+    public void drawMovie() {
+        tint(255, calcOpacity());
         
-//         try {
-//             image(image, 0, 0);
-//         } catch (ArrayIndexOutOfBoundsException e) {
-//             println("Daaayyuu- aw...");
-//         }
-//     }
+        try {
+            image(image, 0, 0);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            println("Daaayyuu- aw...");
+        }
+    }
 
-//     @Override
-//     protected double progress() {
-//         return time()/duration()/timeScale; 
-//     }
+    @Override
+    protected double progress() {
+        return time()/duration()/timeScale; 
+    }
 
-//     @Override
-//     protected double time() {
-//         return ((millis()/1000.0) - (startMillis/1000.0)) * timeScale;
-//     }
+    @Override
+    protected double time() {
+        return ((millis()/1000.0) - (startMillis/1000.0)) * timeScale;
+    }
     
-//     @Override
-//     protected double duration() {
-//         return 3;
-//     }
+    @Override
+    protected double duration() {
+        return 3;
+    }
 
-//     @Override
-//     public boolean pauseIfOver() {
-//       return (progress() >= 0.8);
-//     }
-// }
+    @Override
+    public boolean pauseIfOver() {
+      return (progress() >= 0.8);
+    }
+}
