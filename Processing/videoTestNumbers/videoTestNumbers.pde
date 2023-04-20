@@ -142,19 +142,19 @@ void playMovie(String source_note, int velocity) {
 
     println(note);
 
-    if (note.charAt(note.length() - 1) == '2') {
-          if (!doesFileExist(note + ".png")) {
-              println(note + ".png not found!");
-              return;
-          }
-          colinMovies.put(name, new colinImage(this, note, velocity));
-      } else {
-          if (!doesFileExist(note + ".mov")) {
-              println(note + ".mov not found!");
-              return;
-          }
-          colinMovies.put(name, new colinMovie(this, note, velocity));
-      }
+    // if (note.charAt(note.length() - 1) == '2') {
+    //       if (!doesFileExist(note + ".png")) {
+    //           println(note + ".png not found!");
+    //           return;
+    //       }
+    //       colinMovies.put(name, new colinImage(this, note, velocity));
+    //   } else {
+    if (!doesFileExist(note + ".mov")) {
+        println(note + ".mov not found!");
+        return;
+    }
+    
+    colinMovies.put(name, new colinMovie(this, note, velocity));
 }
 
  boolean doesFileExist(String filePath) {
