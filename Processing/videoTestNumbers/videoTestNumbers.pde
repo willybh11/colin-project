@@ -90,6 +90,10 @@ void getKeysPressed() {
 
 
 void processKeyEvent(JSONObject object) {
+    // int pitch_wheel = object.getInt("pitch");
+    
+    // edit_pitch_wheel(pitch_wheel);
+    
     if (colinMovies.size() < MILES_LIMIT) {
         JSONArray arr = object.getJSONArray("notes_pressed");
     

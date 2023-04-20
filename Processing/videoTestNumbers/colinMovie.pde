@@ -2,6 +2,11 @@ import processing.video.*;
 import java.util.Map;
 import java.util.HashMap;
 
+private static int pitch_wheel_value;
+
+public static void edit_pitch_wheel(int value) {
+     pitch_wheel_value = value;
+}
 
 public class colinMovie {
     private Movie movie;
@@ -44,7 +49,7 @@ public class colinMovie {
     public void drawMovie() {
         tint(255, calcOpacity());
         imageMode(CENTER);
-        image(movie, this.x, this.y, 360, 640); 
+        image(movie, this.x, this.y, 360 + pitch_wheel_value/10, 640 + pitch_wheel_value/10); 
     }
 
     public boolean pauseIfOver() {
