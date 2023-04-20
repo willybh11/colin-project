@@ -30,6 +30,7 @@ final int MILES_LIMIT = 7;
 
 void setup() {
     size(1920, 1080);
+    imageMode(CENTER);
     frameRate(30);
     
     colinMovies = new ConcurrentHashMap<String, colinMovie>();

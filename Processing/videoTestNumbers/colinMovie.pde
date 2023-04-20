@@ -42,8 +42,10 @@ public class colinMovie {
     
     public void drawMovie() {
         tint(255, calcOpacity());
-        imageMode(CENTER);
-        image(movie, this.x, this.y, 360, 640); 
+        
+        try {
+            image(movie, this.x, this.y, 360, 640); 
+        }
     }
 
     public boolean pauseIfOver() {
@@ -75,7 +77,12 @@ public class colinImage extends colinMovie {
     @Override
     public void drawMovie() {
         tint(255, calcOpacity());
-        image(image, 0, 0);
+        
+        try {
+            image(image, 0, 0);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            println("Daaayyuu- aw...");
+        }
     }
 
     @Override
