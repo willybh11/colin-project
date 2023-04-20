@@ -37,6 +37,8 @@ notes_released = []
 
 note_lock = False
 
+global current_pitch
+current_pitch = 0
 
 def replace_numbers(input_str):
     return re.sub(r'\d+', '', input_str)
@@ -72,7 +74,9 @@ def connect(port_name):
                 note = note_list[message.note - 21]
                 update(note, message.velocity, message.type)
             elif message.type == "pitchwheel":
-                # message.pitch
+                global current_pitch
+                current_pitch = message.pitch/8192
+                
                 pass
                 # print(active_notes)
                 # print("chord:", generalize_notes())
@@ -113,7 +117,8 @@ def start():
                 'notes': active_notes,
                 'chord': list(generalize_notes()),
                 'notes_pressed': notes_pressed,
-                'notes_released': notes_released
+                'notes_released': notes_released,
+                'pitch': current_pitch
             }) + "<!>"
 
             notes_pressed.clear()
