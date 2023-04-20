@@ -44,7 +44,7 @@ public class colinMovie {
     public void drawMovie() {
         tint(255, calcOpacity());
         imageMode(CENTER);
-        image(movie, this.x, this.y); 
+        image(movie, this.x, this.y, 360, 640); 
     }
 
     public boolean pauseIfOver() {

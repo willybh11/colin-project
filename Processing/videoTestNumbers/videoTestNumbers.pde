@@ -36,7 +36,7 @@ void setup() {
     client = new Client(this, "127.0.0.1", 3000);
     dataBuffer = "";
 
-    Movie dummyMovie = new Movie(this, "C6.mov");
+    Movie dummyMovie = new Movie(this, "L1.mov");
     dummyMovie.dispose();
 }  
 
@@ -108,40 +108,36 @@ void movieEvent(Movie m) {
     m.read();
 }
 
-String random_funny(String note) {
+String[] array = {
+    "L",
+    "L",
+    "L",
+    "L",
+    "L",
+    "L",
+    "L"
+};
+
+
+String random_funny() {
     if (indices.size() <= 0) {
-        for (int i=0; i<PITCH_CLASSES.length; i++) {
-            if (indices.size() < PITCH_CLASSES.length)
+        for (int i=1; i<19; i++) {
+            if (indices.size() < 19)
                 indices.add(i);
             else
                 throw new RuntimeException();
         };
     }
 
-    int octave = parseInt(note.substring(note.length() - 1));
-    // println("old octave " + octave);
-    octave = octave >= 2 ? 5 : 2;
-    // println("new octave " + octave);
-    // println(octave);
-
-    String out = PITCH_CLASSES[indices.remove((int) random(indices.size()))] + octave;
-
-    // println("out " + out);
-    return out;
+    return "L" + indices.remove((int) random(indices.size()));
 }
 
 void playMovie(String source_note, int velocity) {
     String name = source_note + str(millis());
-    String note = source_note;
-    
-    //try {
-    //    note = random_funny(source_note);
-    //} catch (RuntimeException e) {
-    //    note = source_note;
-    //}
+    String note = random_funny();
 
     println(note);
-    
+
     if (note.charAt(note.length() - 1) == '2') {
           if (!doesFileExist(note + ".png")) {
               println(note + ".png not found!");

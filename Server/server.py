@@ -71,6 +71,9 @@ def connect(port_name):
             if message.type == "note_on" or message.type == "note_off":
                 note = note_list[message.note - 21]
                 update(note, message.velocity, message.type)
+            elif message.type == "pitchwheel":
+                # message.pitch
+                pass
                 # print(active_notes)
                 # print("chord:", generalize_notes())
             # for conn in active_connections:
