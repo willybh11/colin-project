@@ -35,7 +35,9 @@ void setup() {
     imageMode(CENTER);
     frameRate(30);
     
-    println(Paths.get(".").toAbsolutePath().normalize().toString()); 
+    // *************************** IMPORTANT ***************************
+    //         YOU MUST CLONE THE PROJECT TO C:/colin-project/
+    // *****************************************************************
     colinMovieNames colinNames = new colinMovieNames();
     
     colinMovies = new ConcurrentHashMap<String, colinMovie>();
