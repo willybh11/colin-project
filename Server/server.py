@@ -68,8 +68,8 @@ def update(note, velocity, _type):
 
 def connect(port_name):
     with mido.open_input(port_name) as port:
+        # print("connected")
         for message in port:
-            # if message.__getattribute__("note") is not None:
             if message.type == "note_on" or message.type == "note_off":
                 note = note_list[message.note - 21]
                 update(note, message.velocity, message.type)
@@ -86,6 +86,8 @@ def connect(port_name):
             #         ['chord']: list(generalize_notes())
             #     }), 'utf-8'))
 
+    print("port closed")
+
 
 def disconnect_socket(conn: socket.socket):
     conn.close()
@@ -98,11 +100,14 @@ def start():
         print(name)
         if "reface" in name:
             start_new_thread(connect, (name,))
-        if "JUNO-DS" in name:
+        if "JUNO-DS" in name and not "DAW" in name:
             start_new_thread(connect, (name,))
         if "Digital Piano" in name:
             start_new_thread(connect, (name,))
         if "Keystation 61 MK3 0" in name:
+            start_new_thread(connect, (name,))
+        if "CASIO" in name:
+            print("connecting")
             start_new_thread(connect, (name,))
 
     last_packet = ""

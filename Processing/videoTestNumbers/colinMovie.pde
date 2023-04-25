@@ -7,6 +7,7 @@ public class colinMovie {
     private int opacity;
     private int x;
     private int y;
+    private float extra;
     protected float timeScale;
     
     public colinMovie(PApplet papp, String note, int velocity) {
@@ -20,6 +21,8 @@ public class colinMovie {
 
         x = ((int) random(1900)) + 10;
         y = ((int) random(1060)) + 10;
+        extra = random(4);
+
         movie.noLoop();
         movie.play();
     }
@@ -42,9 +45,9 @@ public class colinMovie {
     
     public void drawMovie() {
         tint(255, calcOpacity());
-        
+
         try {
-            image(movie, 0, 0);
+            image(movie, x, y, (int) (72 + extra * 72), (int) (128 + extra * 128));
         } catch (ArrayIndexOutOfBoundsException e) {
             println("Daaayyuu- aw...");
         }
