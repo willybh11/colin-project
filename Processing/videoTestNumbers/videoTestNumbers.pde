@@ -6,8 +6,10 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.NoSuchElementException;
 import java.util.Arrays;
+import java.nio.file.Paths;
 
 ConcurrentHashMap<String, colinMovie> colinMovies;
+
 Client client;
 String dataBuffer;
 
@@ -32,6 +34,9 @@ void setup() {
     size(1920, 1080);
     imageMode(CENTER);
     frameRate(30);
+    
+    println(Paths.get(".").toAbsolutePath().normalize().toString()); 
+    colinMovieNames colinNames = new colinMovieNames();
     
     colinMovies = new ConcurrentHashMap<String, colinMovie>();
     client = new Client(this, "127.0.0.1", 3000);
