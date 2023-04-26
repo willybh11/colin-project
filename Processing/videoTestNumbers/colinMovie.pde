@@ -10,12 +10,12 @@ public class colinMovie {
     private float extra;
     protected float timeScale;
     
-    public colinMovie(PApplet papp, String note, int velocity) {
-        start(papp, note, velocity);
+    public colinMovie(PApplet papp, String filename, int velocity) {
+        start(papp, filename, velocity);
     }
 
-    protected void start(PApplet papp, String note, int velocity) {
-        movie = new Movie(papp, note + ".mov");
+    protected void start(PApplet papp, String filename, int velocity) {
+        movie = new Movie(papp, filename);
         timeScale = Math.min(((float) velocity)/127 * 2 + .4, 4);
         println(this.timeScale);
 
@@ -62,51 +62,3 @@ public class colinMovie {
         return false;
     }
 }
-
-// public class colinImage extends colinMovie {
-//     protected float timeScale;
-//     private PImage image;
-//     private int startMillis;
-
-//     public colinImage(PApplet papp, String note, int velocity) {
-//         super(papp, note, velocity);
-//     }
-
-//     @Override
-//     protected void start(PApplet papp, String note, int velocity) {
-//         image = loadImage(note + ".png");
-//         timeScale = Math.min(((float) velocity)/127 * 2 + .4, 4);
-//         startMillis = millis();
-//     }
-
-//     @Override
-//     public void drawMovie() {
-//         tint(255, calcOpacity());
-        
-//         try {
-//             image(image, 0, 0);
-//         } catch (ArrayIndexOutOfBoundsException e) {
-//             println("Daaayyuu- aw...");
-//         }
-//     }
-
-//     @Override
-//     protected double progress() {
-//         return time()/duration()/timeScale; 
-//     }
-
-//     @Override
-//     protected double time() {
-//         return ((millis()/1000.0) - (startMillis/1000.0)) * timeScale;
-//     }
-    
-//     @Override
-//     protected double duration() {
-//         return 3;
-//     }
-
-//     @Override
-//     public boolean pauseIfOver() {
-//       return (progress() >= 0.8);
-//     }
-// }

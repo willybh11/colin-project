@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.nio.file.Paths;
 
 ConcurrentHashMap<String, colinMovie> colinMovies;
+ColinMovieNames colinMovieNames;
 
 Client client;
 String dataBuffer;
@@ -38,13 +39,12 @@ void setup() {
     // *************************** IMPORTANT ***************************
     //         YOU MUST CLONE THE PROJECT TO C:/colin-project/
     // *****************************************************************
-    colinMovieNames colinNames = new colinMovieNames();
-    
+    colinMovieNames = new ColinMovieNames();
     colinMovies = new ConcurrentHashMap<String, colinMovie>();
     client = new Client(this, "127.0.0.1", 3000);
     dataBuffer = "";
 
-    Movie dummyMovie = new Movie(this, "L1.mov");
+    Movie dummyMovie = new Movie(this, colinMovieNames.getMovie("C4", 50));
     dummyMovie.dispose();
 }  
 
@@ -120,49 +120,11 @@ void movieEvent(Movie m) {
     m.read();
 }
 
-String[] array = {
-    "L",
-    "L",
-    "L",
-    "L",
-    "L",
-    "L",
-    "L"
-};
-
-
-String random_funny() {
-    if (indices.size() <= 0) {
-        for (int i=1; i<19; i++) {
-            if (indices.size() < 19)
-                indices.add(i);
-            else
-                throw new RuntimeException();
-        };
-    }
-
-    return "L" + indices.remove((int) random(indices.size()));
-}
 
 void playMovie(String source_note, int velocity) {
     String name = source_note + str(millis());
-    String note = random_funny();
-
-    println(note);
-
-    // if (note.charAt(note.length() - 1) == '2') {
-    //       if (!doesFileExist(note + ".png")) {
-    //           println(note + ".png not found!");
-    //           return;
-    //       }
-    //       colinMovies.put(name, new colinImage(this, note, velocity));
-    //   } else {
-    if (!doesFileExist(note + ".mov")) {
-        println(note + ".mov not found!");
-        return;
-    }
-    
-    colinMovies.put(name, new colinMovie(this, note, velocity));
+    String filename = colinMovieNames.getMovie(source_note, velocity);
+    colinMovies.put(name, new colinMovie(this, filename, velocity));
 }
 
  boolean doesFileExist(String filePath) {
