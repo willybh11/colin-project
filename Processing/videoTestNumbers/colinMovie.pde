@@ -17,8 +17,10 @@ public class colinMovie {
     protected void start(PApplet papp, String filename, int velocity) {
         movie = new Movie(papp, filename);
         timeScale = Math.min(((float) velocity)/127 * 2 + .4, 4);
-        println(this.timeScale);
-
+        if (DEBUG) {
+          println(this.timeScale);
+        }
+        
         x = ((int) random(1900)) + 10;
         y = ((int) random(1060)) + 10;
         extra = random(4);
@@ -51,7 +53,9 @@ public class colinMovie {
             image(movie, x*4, y*4);//, (int) (72 + extra * 72), (int) (128 + extra * 128));
             scale(4);
         } catch (ArrayIndexOutOfBoundsException e) {
-            println("Daaayyuu- aw...");
+            if (DEBUG) {
+              println("Daaayyuu- aw...");
+            }
         }
     }
 

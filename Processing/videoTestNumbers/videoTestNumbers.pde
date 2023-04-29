@@ -8,6 +8,8 @@ import java.util.NoSuchElementException;
 import java.util.Arrays;
 import java.nio.file.Paths;
 
+final static boolean DEBUG = false;
+
 ConcurrentHashMap<String, colinMovie> colinMovies;
 ColinMovieNames colinMovieNames;
 
@@ -81,7 +83,9 @@ void getKeysPressed() {
         String[] incoming = dataBuffer.split(JSON_STREAM_DELIMITER_AVYAY);
         
         if (dataBuffer.endsWith("<!>")) {
-            println("incoming.length: " + incoming.length);
+            if (DEBUG) {
+              println("incoming.length: " + incoming.length);
+            }
             for (int i = 0; i < incoming.length; i++) {
                 JSONObject e = parseJSONObject(incoming[i]);
                 processKeyEvent(e);
@@ -110,8 +114,10 @@ void processKeyEvent(JSONObject object) {
                 JSONArray note = arr.getJSONArray(i);
                 String pitch = note.getString(0); //note 
                 int velocity = note.getInt(1); //velocity
-      
-                println("Playing " + pitch + " with velocity " + velocity + "fr: " + frameRate);
+                
+                if (DEBUG) {
+                  println("Playing " + pitch + " with velocity " + velocity + "fr: " + frameRate);
+                }
                 playMovie(pitch, velocity);
         }
     }
@@ -132,7 +138,9 @@ void playMovie(String source_note, int velocity) {
         colinMovies.put(name, new colinMovie(this, filename, velocity));
       }
     } catch (NullPointerException e) {
-      println("Error, note out of range!");
+      if (DEBUG) {
+        println("Error, note out of range!");
+      }
     }
 }
 

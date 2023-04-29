@@ -79,7 +79,9 @@ public class ColinMovieNames {
   }
   
   public String getMovie(String pitch, int velocity) {
-    println("called ColinMovieNames.getMovie( " + pitch + ", " + velocity + ")");
+    if (DEBUG) {
+      println("called ColinMovieNames.getMovie( " + pitch + ", " + velocity + ")");
+    }
     if (noteGroupMap.get(pitch) == 1) {
       return group_1.getMovie(velocity);
     } else if (noteGroupMap.get(pitch) == 2) { 

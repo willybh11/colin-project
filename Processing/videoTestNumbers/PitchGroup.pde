@@ -10,7 +10,9 @@ public class PitchGroup {
  
   public PitchGroup(int num) {
     
-    println("pitchgroup init, num = " + num);
+    if (DEBUG) {
+      println("pitchgroup init, num = " + num);
+    }
     
     groupNumber = num;
     
@@ -50,22 +52,20 @@ public class PitchGroup {
   
   public String getMovie(int velocity) {
     
-    println("called PitchGroup.getMovie(" + velocity + ") in pitch group " + groupNumber);
+    if (DEBUG) {
+      println("called PitchGroup.getMovie(" + velocity + ") in pitch group " + groupNumber);
+    }
     
     ArrayList<String> vel_group;
 
     if (velocity < 50) {
       vel_group = vel_1;
-      println("velgroup is 1");
     } else if (velocity < 65) {
       vel_group = vel_2;
-      println("velgroup is 2");
     } else if (velocity < 80) {
       vel_group = vel_3;
-      println("velgroup is 3");
     } else { // velocity < 128
       vel_group = vel_4;
-      println("velgroup is 4");
     }
     
     return vel_group.get(int(random(vel_group.size())));
