@@ -10,7 +10,17 @@ public class colinMovie {
     private float extra;
     protected float timeScale;
     
-    public colinMovie(PApplet papp, String filename, int velocity) {
+    private double r;
+    private double g;
+    private double b;
+    
+    private double r1;
+    private double g1;
+    private double b1;
+    
+    public colinMovie(PApplet papp, String filename, int velocity, int r, int g, int b) {
+        setColor(r, g, b);
+        setTargetColor(r + velocity * .25, g + velocity * .25, b + velocity * .25);
         start(papp, filename, velocity);
     }
 
@@ -43,8 +53,35 @@ public class colinMovie {
         return (int) (255 * (-16 * Math.pow(time()/duration() - .5, 4) + 1));
     }
     
+    public void setColor(int r, int g, int b) {
+        this.r = (double) r;
+        this.g = (double) g;
+        this.b = (double) b;
+    }
+    
+    public void setTargetColor(double r1, double g1, double b1) {
+        this.r1 = r1;
+        this.g1 = g1;
+        this.b1 = b1;
+    }
+
+    private double lerp(double a, double b, double n) {
+        return a + ((b - a) * n);
+    }
+
+    private void lerpColor(double n) {
+        r = lerp(r, r1, n);
+        g = lerp(g, g1, n);
+        b = lerp(b, b1, n);
+    }
+
+    public void updateColor() {
+        tint((int) r, (int) g, (int) b, calcOpacity());
+        lerpColor(.2);
+    }
+
     public void drawMovie() {
-        tint(255, calcOpacity());
+        updateColor();
 
         try {
             scale(0.25);
@@ -70,8 +107,8 @@ public class colinImage extends colinMovie {
     private PImage image;
     private int startMillis;
 
-    public colinImage(PApplet papp, String note, int velocity) {
-        super(papp, note, velocity);
+    public colinImage(PApplet papp, String note, int velocity, int r, int g, int b) {
+        super(papp, note, velocity, r, g, b);
     }
 
     @Override
@@ -83,7 +120,7 @@ public class colinImage extends colinMovie {
 
     @Override
     public void drawMovie() {
-        tint(255, calcOpacity());
+        updateColor();
         image(image, width/2, height/2);
     }
 
