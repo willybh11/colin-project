@@ -31,16 +31,16 @@ public class PitchGroup {
           if (groupNum == this.groupNumber) {
             if (velNum == 1) {
               vel_1.add(filename);
-              println("Added " + filename + " to pitch group 1");
+              println("Added " + filename + " to vel group 1, pitch group " + groupNumber);
             } else if (velNum == 2) {
               vel_2.add(filename);
-              println("Added " + filename + " to pitch group 2");
+              println("Added " + filename + " to vel group 2, pitch group " + groupNumber);
             } else if (velNum == 3) {
               vel_3.add(filename);
-              println("Added " + filename + " to pitch group 3");
+              println("Added " + filename + " to vel group 3, pitch group " + groupNumber);
             } else { // velNum == 4
               vel_4.add(filename);
-              println("Added " + filename + " to pitch group 4");
+              println("Added " + filename + " to vel group 4, pitch group " + groupNumber);
             }
           }
         }
@@ -50,16 +50,22 @@ public class PitchGroup {
   
   public String getMovie(int velocity) {
     
+    println("called PitchGroup.getMovie(" + velocity + ") in pitch group " + groupNumber);
+    
     ArrayList<String> vel_group;
 
-    if (velocity == 1) {
+    if (velocity < 50) {
       vel_group = vel_1;
-    } else if (velocity == 2) {
+      println("velgroup is 1");
+    } else if (velocity < 65) {
       vel_group = vel_2;
-    } else if (velocity == 3) {
+      println("velgroup is 2");
+    } else if (velocity < 80) {
       vel_group = vel_3;
-    } else { // velocity == 4
+      println("velgroup is 3");
+    } else { // velocity < 128
       vel_group = vel_4;
+      println("velgroup is 4");
     }
     
     return vel_group.get(int(random(vel_group.size())));

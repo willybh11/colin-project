@@ -29,12 +29,13 @@ String[] PITCH_CLASSES = {
 ArrayList<Integer> indices = new ArrayList<>();
 
 final String JSON_STREAM_DELIMITER_AVYAY = "<!>";
-final int MILES_LIMIT = 7;
+final int MILES_LIMIT = 10;
 
 void setup() {
     size(1920, 1080);
     imageMode(CENTER);
     frameRate(30);
+    fullScreen();
     
     // *************************** IMPORTANT ***************************
     //         YOU MUST CLONE THE PROJECT TO C:/colin-project/
@@ -124,7 +125,11 @@ void movieEvent(Movie m) {
 void playMovie(String source_note, int velocity) {
     String name = source_note + str(millis());
     String filename = colinMovieNames.getMovie(source_note, velocity);
-    colinMovies.put(name, new colinMovie(this, filename, velocity));
+    if (filename.endsWith(".png")) {
+      colinMovies.put(name, new colinImage(this, filename, velocity));
+    } else { // .mov
+      colinMovies.put(name, new colinMovie(this, filename, velocity));
+    }
 }
 
  boolean doesFileExist(String filePath) {

@@ -47,7 +47,9 @@ public class colinMovie {
         tint(255, calcOpacity());
 
         try {
-            image(movie, x, y, (int) (72 + extra * 72), (int) (128 + extra * 128));
+            scale(0.25);
+            image(movie, x*4, y*4);//, (int) (72 + extra * 72), (int) (128 + extra * 128));
+            scale(4);
         } catch (ArrayIndexOutOfBoundsException e) {
             println("Daaayyuu- aw...");
         }
@@ -60,5 +62,48 @@ public class colinMovie {
             return true;
         } 
         return false;
+    }
+}
+
+public class colinImage extends colinMovie {
+    protected float timeScale;
+    private PImage image;
+    private int startMillis;
+
+    public colinImage(PApplet papp, String note, int velocity) {
+        super(papp, note, velocity);
+    }
+
+    @Override
+    protected void start(PApplet papp, String note, int velocity) {
+        image = loadImage(note);
+        timeScale = Math.min(((float) velocity)/127 * 2 + .4, 4);
+        startMillis = millis();
+    }
+
+    @Override
+    public void drawMovie() {
+        tint(255, calcOpacity());
+        image(image, width/2, height/2);
+    }
+
+    @Override
+    protected double progress() {
+        return time()/duration()/timeScale; 
+    }
+
+    @Override
+    protected double time() {
+        return ((millis()/1000.0) - (startMillis/1000.0)) * timeScale;
+    }
+    
+    @Override
+    protected double duration() {
+        return 3;
+    }
+
+    @Override
+    public boolean pauseIfOver() {
+      return (progress() >= 0.8);
     }
 }
