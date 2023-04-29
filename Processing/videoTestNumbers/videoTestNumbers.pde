@@ -34,7 +34,7 @@ final int MILES_LIMIT = 10;
 void setup() {
     size(1920, 1080);
     imageMode(CENTER);
-    frameRate(30);
+    frameRate(24);
     fullScreen();
     
     // *************************** IMPORTANT ***************************
