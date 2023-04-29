@@ -124,11 +124,15 @@ void movieEvent(Movie m) {
 
 void playMovie(String source_note, int velocity) {
     String name = source_note + str(millis());
-    String filename = colinMovieNames.getMovie(source_note, velocity);
-    if (filename.endsWith(".png")) {
-      colinMovies.put(name, new colinImage(this, filename, velocity));
-    } else { // .mov
-      colinMovies.put(name, new colinMovie(this, filename, velocity));
+    try {
+      String filename = colinMovieNames.getMovie(source_note, velocity);
+      if (filename.endsWith(".png")) {
+        colinMovies.put(name, new colinImage(this, filename, velocity));
+      } else { // .mov
+        colinMovies.put(name, new colinMovie(this, filename, velocity));
+      }
+    } catch (NullPointerException e) {
+      println("Error, note out of range!");
     }
 }
 
