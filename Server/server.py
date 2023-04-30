@@ -10,6 +10,8 @@ import json
 import time
 
 from _thread import start_new_thread
+from triads import triads, color_mapping, random_color
+# from triads import color_mapping
 
 note_list = [
     "A0", "A#0", "B0",
@@ -94,6 +96,23 @@ def disconnect_socket(conn: socket.socket):
     active_connections.remove(conn)
 
 
+def guess_chord():
+    _chord = generalize_notes()
+    for name, notes in triads.items():
+        if _chord.issubset(notes) or notes.issubset(_chord):
+            return name
+    # for name, notes in thirds.items():
+    #     if notes.issubset(_chord):
+    #         return name
+    return "  "
+        
+
+def get_color(name: str):
+    if name in color_mapping:
+        return color_mapping[name]
+    return random_color()
+
+
 def start():
     # global note_lock
     for name in mido.get_input_names():
@@ -118,9 +137,11 @@ def start():
             while len(notes_pressed) < 1 and len(notes_released) < 1:
                 pass
             # note_lock = True
+
             packet = json.dumps({
                 'notes': active_notes,
                 'chord': list(generalize_notes()),
+                'color': get_color(guess_chord()),
                 'notes_pressed': notes_pressed,
                 'notes_released': notes_released,
                 'pitch': current_pitch
