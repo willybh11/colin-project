@@ -92,4 +92,8 @@ public class ColinMovieNames {
       return group_4.getMovie(velocity);
     }
   }
+
+  public String getFullScreen(String pitch) {
+    return (noteGroupMap.get(pitch) == 1);
+  }
 }

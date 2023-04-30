@@ -34,7 +34,7 @@ final String JSON_STREAM_DELIMITER_AVYAY = "<!>";
 final int MILES_LIMIT = 10;
 
 void setup() {
-    size(1920, 1080);
+    size(2560, 1080);
     imageMode(CENTER);
     frameRate(24);
     fullScreen();
@@ -142,10 +142,12 @@ void playMovie(String source_note, int velocity) {
     String name = source_note + str(millis());
     try {
         String filename = colinMovieNames.getMovie(source_note, velocity);
+        boolean fullScreen = colinMovieNames.getFullScreen(source_note);
+
         if (filename.endsWith(".png")) {
-            colinMovies.put(name, new colinImage(this, filename, velocity, (int) random(45, 180), (int) random(45, 180), (int) random(45, 180)));
+            colinMovies.put(name, new colinImage(this, filename, velocity, (int) random(45, 180), (int) random(45, 180), (int) random(45, 180), fullScreen));
         } else { // .mov
-            colinMovies.put(name, new colinMovie(this, filename, velocity, (int) random(45, 180), (int) random(45, 180), (int) random(45, 180)));
+            colinMovies.put(name, new colinMovie(this, filename, velocity, (int) random(45, 180), (int) random(45, 180), (int) random(45, 180), fullScreen));
         }
     } catch (NullPointerException e) {
       if (DEBUG) {

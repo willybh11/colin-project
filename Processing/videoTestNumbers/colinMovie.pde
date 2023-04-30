@@ -9,6 +9,7 @@ public class colinMovie {
     private int y;
     private float extra;
     protected float timeScale;
+    protected boolean fullScreen;
     
     private double r;
     private double g;
@@ -18,25 +19,26 @@ public class colinMovie {
     private double g1;
     private double b1;
     
-    public colinMovie(PApplet papp, String filename, int velocity, int r, int g, int b) {
+    public colinMovie(PApplet papp, String filename, int velocity, int r, int g, int b, boolean fullScreen) {
         setColor(r, g, b);
         setTargetColor(r + velocity * .25, g + velocity * .25, b + velocity * .25);
-        start(papp, filename, velocity);
+        start(papp, filename, velocity, fullScreen);
     }
 
-    protected void start(PApplet papp, String filename, int velocity) {
+    protected void start(PApplet papp, String filename, int velocity, boolean fullScreen) {
         movie = new Movie(papp, filename);
         timeScale = Math.min(((float) velocity)/127 * 2 + .4, 4);
         if (DEBUG) {
           println(this.timeScale);
         }
         
-        x = ((int) random(1900)) + 10;
+        x = ((int) random(2540)) + 10;
         y = ((int) random(1060)) + 10;
         extra = random(4);
 
         movie.noLoop();
         movie.play();
+        this.fullScreen = fullScreen;
     }
     
     protected double time() {
@@ -86,9 +88,11 @@ public class colinMovie {
         updateColor();
 
         try {
-            //scale(0.25);
-            image(movie, x*4, y*4);//, (int) (72 + extra * 72), (int) (128 + extra * 128));
-            //scale(4);
+            if (fullScreen) {
+                image(movie, width/2, height/2);
+            } else {
+                image(movie, x*4, y*4);//, (int) (72 + extra * 72), (int) (128 + extra * 128));
+            }
         } catch (ArrayIndexOutOfBoundsException e) {
             if (DEBUG) {
               println("Daaayyuu- aw...");
@@ -111,23 +115,24 @@ public class colinImage extends colinMovie {
     private PImage image;
     private int startMillis;
 
-    public colinImage(PApplet papp, String note, int velocity, int r, int g, int b) {
-        super(papp, note, velocity, r, g, b);
+    public colinImage(PApplet papp, String note, int velocity, int r, int g, int b, boolean fullScreen) {
+        super(papp, note, velocity, r, g, b, fullScreen);
     }
 
     @Override
-    protected void start(PApplet papp, String note, int velocity) {
+    protected void start(PApplet papp, String note, int velocit,y, boolean fullScreen) {
         image = loadImage(note);
         timeScale = Math.min(((float) velocity)/127 * 2 + .4, 4);
         startMillis = millis();
+        this.fullScreen = true;
     }
 
     @Override
     public void drawMovie() {
         updateColor();
-        scale(4);
+        // scale(4);
         image(image, width/2, height/2);
-        scale(0.25);
+        // scale(0.25);
     }
 
     @Override
