@@ -112,14 +112,23 @@ void processKeyEvent(JSONObject object) {
         JSONArray arr = object.getJSONArray("notes_pressed");
     
         for (int i = 0; i < arr.size(); i++) {
-                JSONArray note = arr.getJSONArray(i);
-                String pitch = note.getString(0); //note 
-                int velocity = note.getInt(1); //velocity
-                
-                if (DEBUG) {
-                  println("Playing " + pitch + " with velocity " + velocity + "fr: " + frameRate);
-                }
-                playMovie(pitch, velocity);
+            JSONArray note = arr.getJSONArray(i);
+            String pitch = note.getString(0); //note 
+            int velocity = note.getInt(1); //velocity
+              
+            if (DEBUG) {
+              println("Playing " + pitch + " with velocity " + velocity + "fr: " + frameRate);
+            }
+
+            playMovie(pitch, velocity);
+        }
+
+        JSONArray arr2 = object.getJSONArray("notes_released");
+        
+        for (int i = 0; i < arr2.size(); i++) {
+            String note = arr2.getString(i);    
+            println("Releasing " + note);
+            releaseMovies(note);
         }
     }
 }
@@ -132,22 +141,31 @@ void movieEvent(Movie m) {
 void playMovie(String source_note, int velocity) {
     String name = source_note + str(millis());
     try {
-      String filename = colinMovieNames.getMovie(source_note, velocity);
-      if (filename.endsWith(".png")) {
-        colinMovies.put(name, new colinImage(this, filename, velocity));
-      } else { // .mov
-        colinMovies.put(name, new colinMovie(this, filename, velocity));
-      }
+        String filename = colinMovieNames.getMovie(source_note, velocity);
+        if (filename.endsWith(".png")) {
+            colinMovies.put(name, new colinImage(this, filename, velocity, (int) random(45, 180), (int) random(45, 180), (int) random(45, 180)));
+        } else { // .mov
+            colinMovies.put(name, new colinMovie(this, filename, velocity, (int) random(45, 180), (int) random(45, 180), (int) random(45, 180)));
+        }
     } catch (NullPointerException e) {
       if (DEBUG) {
         println("Error, note out of range!");
-      }
+        }
     }
 }
 
- boolean doesFileExist(String filePath) {
-   return new File(dataPath(filePath)).exists();
- }
+void releaseMovies(String note) {
+    for (String key: colinMovies.keySet()) {
+        if (key.startsWith(note)) {
+            colinMovie movie = colinMovies.get(key);
+            movie.setTargetColor(random(45, 180), random(45, 180), random(45, 180));
+        }
+    }
+}
+
+boolean doesFileExist(String filePath) {
+    return new File(dataPath(filePath)).exists();
+}
 
 
 void keyPressed() {

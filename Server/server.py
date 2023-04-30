@@ -115,7 +115,7 @@ def start():
     while True:
         if len(active_connections) > 0:
 
-            while len(notes_pressed) < 1:
+            while len(notes_pressed) < 1 and len(notes_released) < 1:
                 pass
             # note_lock = True
             packet = json.dumps({
