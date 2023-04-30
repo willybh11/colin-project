@@ -16,6 +16,8 @@ ColinMovieNames colinMovieNames;
 Client client;
 String dataBuffer;
 
+double[] current_color = {0, 0, 0};
+
 String[] PITCH_CLASSES = {
     /* 
     "C", "Db", "D", "Eb",
@@ -107,20 +109,33 @@ void processKeyEvent(JSONObject object) {
     // int pitch_wheel = object.getInt("pitch");
     
     // edit_pitch_wheel(pitch_wheel);
+
+    println(object);
     
     if (colinMovies.size() < MILES_LIMIT) {
+        JSONArray colorBears = object.getJSONArray("color");
         JSONArray arr = object.getJSONArray("notes_pressed");
-    
-        for (int i = 0; i < arr.size(); i++) {
-            JSONArray note = arr.getJSONArray(i);
-            String pitch = note.getString(0); //note 
-            int velocity = note.getInt(1); //velocity
-              
-            if (DEBUG) {
-              println("Playing " + pitch + " with velocity " + velocity + "fr: " + frameRate);
-            }
 
-            playMovie(pitch, velocity);
+        if (colorBears != null && colorBears.size() >= 3) {
+            int r = colorBears.getInt(0);
+            int g = colorBears.getInt(1);
+            int b = colorBears.getInt(2);
+
+            current_color[0] = (double) r;
+            current_color[1] = (double) g;
+            current_color[2] = (double) b;
+
+            for (int i = 0; i < arr.size(); i++) {
+                JSONArray note = arr.getJSONArray(i);
+                String pitch = note.getString(0); //note 
+                int velocity = note.getInt(1); //velocity
+                
+                if (DEBUG) {
+                    println("Playing " + pitch + " with velocity " + velocity + "fr: " + frameRate);
+                }
+
+                playMovie(pitch, velocity, r, g, b);
+            }
         }
 
         JSONArray arr2 = object.getJSONArray("notes_released");
@@ -137,8 +152,11 @@ void movieEvent(Movie m) {
     m.read();
 }
 
+int offset(int range) {
+    return (int) random(-range/2, range/2);
+}
 
-void playMovie(String source_note, int velocity) {
+void playMovie(String source_note, int velocity, int r, int g, int b) {
     String name = source_note + str(millis());
     try {
         String filename = colinMovieNames.getMovie(source_note, velocity);
@@ -150,8 +168,8 @@ void playMovie(String source_note, int velocity) {
             colinMovies.put(name, new colinMovie(this, filename, velocity, (int) random(45, 180), (int) random(45, 180), (int) random(45, 180), fullScreen));
         }
     } catch (NullPointerException e) {
-      if (DEBUG) {
-        println("Error, note out of range!");
+        if (DEBUG) {
+            println("Error, note out of range!");
         }
     }
 }
@@ -160,7 +178,7 @@ void releaseMovies(String note) {
     for (String key: colinMovies.keySet()) {
         if (key.startsWith(note)) {
             colinMovie movie = colinMovies.get(key);
-            movie.setTargetColor(random(45, 180), random(45, 180), random(45, 180));
+            movie.setTargetColor(current_color[0], current_color[1], current_color[2]);
         }
     }
 }
