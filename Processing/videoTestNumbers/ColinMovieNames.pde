@@ -93,7 +93,7 @@ public class ColinMovieNames {
     }
   }
 
-  public String getFullScreen(String pitch) {
+  public boolean getFullScreen(String pitch) {
     return (noteGroupMap.get(pitch) == 1);
   }
 }

@@ -89,7 +89,9 @@ public class colinMovie {
 
         try {
             if (fullScreen) {
+                scale(4);
                 image(movie, width/2, height/2);
+                scale(0.25);
             } else {
                 image(movie, x*4, y*4);//, (int) (72 + extra * 72), (int) (128 + extra * 128));
             }
@@ -120,7 +122,7 @@ public class colinImage extends colinMovie {
     }
 
     @Override
-    protected void start(PApplet papp, String note, int velocit,y, boolean fullScreen) {
+    protected void start(PApplet papp, String note, int velocity, boolean fullScreen) {
         image = loadImage(note);
         timeScale = Math.min(((float) velocity)/127 * 2 + .4, 4);
         startMillis = millis();
@@ -130,9 +132,9 @@ public class colinImage extends colinMovie {
     @Override
     public void drawMovie() {
         updateColor();
-        // scale(4);
+        scale(2);
         image(image, width/2, height/2);
-        // scale(0.25);
+        scale(0.5);
     }
 
     @Override
