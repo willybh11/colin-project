@@ -56,7 +56,7 @@ void setup() {
 
 void draw() {    
     background(0);
-    scale(0.25);
+    scale(0.5);
     getKeysPressed();
     
     Set<String> names = colinMovies.keySet();
@@ -163,9 +163,9 @@ void playMovie(String source_note, int velocity, int r, int g, int b) {
         boolean fullScreen = colinMovieNames.getFullScreen(source_note);
 
         if (filename.endsWith(".png")) {
-            colinMovies.put(name, new colinImage(this, filename, velocity, (int) random(45, 180), (int) random(45, 180), (int) random(45, 180), fullScreen));
+            colinMovies.put(name, new colinImage(this, filename, velocity, r + offset(6), g + offset(6), b + offset(6), fullScreen));
         } else { // .mov
-            colinMovies.put(name, new colinMovie(this, filename, velocity, (int) random(45, 180), (int) random(45, 180), (int) random(45, 180), fullScreen));
+            colinMovies.put(name, new colinMovie(this, filename, velocity, r + offset(6), g + offset(6), b + offset(6), fullScreen));
         }
     } catch (NullPointerException e) {
         if (DEBUG) {

@@ -89,11 +89,11 @@ public class colinMovie {
 
         try {
             if (fullScreen) {
-                scale(4);
+                scale(2);
                 image(movie, width/2, height/2);
-                scale(0.25);
+                scale(0.5);
             } else {
-                image(movie, x*4, y*4);//, (int) (72 + extra * 72), (int) (128 + extra * 128));
+                image(movie, x*2, y*2);//, (int) (72 + extra * 72), (int) (128 + extra * 128));
             }
         } catch (ArrayIndexOutOfBoundsException e) {
             if (DEBUG) {
