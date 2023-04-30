@@ -36,7 +36,7 @@ final String JSON_STREAM_DELIMITER_AVYAY = "<!>";
 final int MILES_LIMIT = 10;
 
 void setup() {
-    size(1920, 1080);
+    size(2560, 1080);
     imageMode(CENTER);
     frameRate(24);
     fullScreen();

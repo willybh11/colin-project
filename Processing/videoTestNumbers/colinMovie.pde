@@ -31,7 +31,7 @@ public class colinMovie {
           println(this.timeScale);
         }
         
-        x = ((int) random(1900)) + 10;
+        x = ((int) random(2540)) + 10;
         y = ((int) random(1060)) + 10;
         extra = random(4);
 
