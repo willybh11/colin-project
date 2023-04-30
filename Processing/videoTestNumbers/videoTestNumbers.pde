@@ -54,6 +54,7 @@ void setup() {
 
 void draw() {    
     background(0);
+    scale(0.25);
     getKeysPressed();
     
     Set<String> names = colinMovies.keySet();

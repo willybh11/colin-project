@@ -49,9 +49,9 @@ public class colinMovie {
         tint(255, calcOpacity());
 
         try {
-            scale(0.25);
+            //scale(0.25);
             image(movie, x*4, y*4);//, (int) (72 + extra * 72), (int) (128 + extra * 128));
-            scale(4);
+            //scale(4);
         } catch (ArrayIndexOutOfBoundsException e) {
             if (DEBUG) {
               println("Daaayyuu- aw...");
@@ -88,7 +88,9 @@ public class colinImage extends colinMovie {
     @Override
     public void drawMovie() {
         tint(255, calcOpacity());
+        scale(4);
         image(image, width/2, height/2);
+        scale(0.25);
     }
 
     @Override
